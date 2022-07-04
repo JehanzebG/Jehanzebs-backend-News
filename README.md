@@ -9,3 +9,11 @@ Your database will be PSQL, and you will interact with it using [node-postgres](
 In order to use this database, please create two new files called .env.test and .env.development.
 
 Once you have done this, run command NPM install in your terminal to install all the dependencies.
+
+Your env.test file should contain the following:
+
+PGDATABASE=nc_news_test;
+
+Your env.dev file should contain the following:
+
+PGDATABASE=nc_news;
