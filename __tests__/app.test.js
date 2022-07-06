@@ -37,3 +37,24 @@ describe("GET: /api/topics", () => {
       });
   });
 });
+describe("GET: /api/articles", () => {
+  test("200: responds with properties from article object", () => {
+    return request(app)
+      .get("/api/articles")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.articles).toBeInstanceOf(Object);
+        expect(body.articles).toHaveLength(12);
+        body.articles.forEach((article) => {
+          expect(article).toMatchObject({
+            title: expect.any(String),
+            topic: expect.any(String),
+            author: expect.any(String),
+            body: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+          });
+        });
+      });
+  });
+});
