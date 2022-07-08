@@ -1,7 +1,7 @@
-const { selectTopics } = require("../module/module.js");
-const { selectArticles } = require("../module/module.js");
-const { selectArticleWithID } = require("../module/module.js");
-const { selectUsers } = require("../module/module.js");
+const { selectTopics } = require("../model/model.js");
+const { selectArticles } = require("../model/model.js");
+const { selectArticleWithID } = require("../model/model.js");
+const { selectUsers } = require("../model/model.js");
 
 exports.getTopics = (req, res, next) => {
   selectTopics()
