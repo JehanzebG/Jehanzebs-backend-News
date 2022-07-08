@@ -18,6 +18,10 @@ exports.selectArticleWithID = (article_id) => {
       [article_id]
     )
     .then((article) => {
+      console.log(article.rows.length);
+      if (article.rows === 0) {
+        return Promise.reject({ status: 404, message: "article not found" });
+      }
       return article.rows[0];
     });
 };

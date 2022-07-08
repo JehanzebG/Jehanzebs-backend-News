@@ -102,9 +102,9 @@ describe("PATCH: /api/articles/article_id", () => {
         });
       });
   });
-  test("404: gives an error when user is not on the correct path", () => {
+  test("404: gives an error when server cannot find article_id", () => {
     return request(app)
-      .get("/api/articless/999")
+      .get("/api/article/999")
       .expect(404)
       .then(({ body: { message } }) => {
         expect(message).toEqual("path does not exist");
