@@ -21,6 +21,21 @@ exports.selectArticleWithID = (article_id) => {
       return article.rows[0];
     });
 };
+exports.updateArticleWithID = (votes, article_id) => {
+  return db
+    .query(
+      `
+      UPDATE articles
+        SET votes = $1
+        WHERE article_id = $2
+    RETURNING *;`,
+      [votes, article_id]
+    )
+    .then((article) => {
+      return article.rows[0];
+    });
+};
+
 exports.selectUsers = () => {
   return db.query("SELECT * FROM users;").then((user) => {
     return user.rows;
