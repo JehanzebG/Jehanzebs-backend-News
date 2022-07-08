@@ -57,30 +57,57 @@ describe("GET: /api/articles", () => {
         });
       });
   });
-  describe("GET: /api/articles/4", () => {
-    test("200: given article ID, responds with relevant article", () => {
-      return request(app)
-        .get("/api/articles/4")
-        .expect(200)
-        .then(({ body }) => {
-          expect(body.article).toMatchObject({
-            article_id: 4,
-            title: "Student SUES Mitch!",
-            topic: "mitch",
-            author: "rogersop",
-            body: "We all love Mitch and his wonderful, unique typing style. However, the volume of his typing has ALLEGEDLY burst another students eardrums, and they are now suing for damages",
-            created_at: expect.any(String),
-            votes: 0,
-          });
+});
+describe("GET: /api/articles/4", () => {
+  test("200: given article ID, responds with relevant article", () => {
+    return request(app)
+      .get("/api/articles/4")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.article).toMatchObject({
+          article_id: 4,
+          title: "Student SUES Mitch!",
+          topic: "mitch",
+          author: "rogersop",
+          body: "We all love Mitch and his wonderful, unique typing style. However, the volume of his typing has ALLEGEDLY burst another students eardrums, and they are now suing for damages",
+          created_at: expect.any(String),
+          votes: 0,
         });
-    });
-    test("400: gives an error when user is not on the correct path", () => {
-      return request(app)
-        .get("/api/articles/books")
-        .expect(400)
-        .then(({ body: { message } }) => {
-          expect(message).toEqual("bad request");
+      });
+  });
+  test("400: gives an error when user is not on the correct path", () => {
+    return request(app)
+      .get("/api/articles/books")
+      .expect(400)
+      .then(({ body: { message } }) => {
+        expect(message).toEqual("bad request");
+      });
+  });
+});
+describe("PATCH: /api/articles/article_id", () => {
+  const newVote = { inc_votes: 1 };
+  test("200: given a newVote will indicate how much the votes property in the database should be updated by", () => {
+    return request(app)
+      .patch("/api/articles/1")
+      .send(newVote)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.article).toMatchObject({
+          title: "Living in the shadow of a great man",
+          topic: "mitch",
+          author: "butter_bridge",
+          body: "I find this existence challenging",
+          created_at: expect.any(String),
+          votes: expect.any(Number),
         });
-    });
+      });
+  });
+  test("404: gives an error when user is not on the correct path", () => {
+    return request(app)
+      .get("/api/articless/999")
+      .expect(404)
+      .then(({ body: { message } }) => {
+        expect(message).toEqual("path does not exist");
+      });
   });
 });
